@@ -1,0 +1,4 @@
+# exclude config file
+app/App.php
+config/*
+congig

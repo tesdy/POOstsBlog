@@ -1,0 +1,1600 @@
+Index: app/Table/UserTable.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/Table/UserTable.php	(date 1538299486000)
++++ app/Table/UserTable.php	(date 1538299486000)
+@@ -0,0 +1,16 @@
++<?php
++/**
++ * Created by PhpStorm.
++ * User: ubuguy
++ * Date: 28/09/18
++ * Time: 17:07
++ */
++
++namespace App\Table;
++
++use Core\Table\Table;
++
++class UserTable extends Table
++{
++
++}
+\ No newline at end of file
+Index: app/Table/ArticleTable.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/Table/ArticleTable.php	(date 1538299486000)
++++ app/Table/ArticleTable.php	(date 1538299486000)
+@@ -0,0 +1,65 @@
++<?php
++/**
++ * Created by PhpStorm.
++ * User: ubuguy
++ * Date: 28/09/18
++ * Time: 17:07
++ */
++
++namespace App\Table;
++
++use Core\Table\Table;
++
++/**
++ * Class ArticleTable
++ * @package App\Table
++ */
++class ArticleTable extends Table
++{
++
++    protected $table = 'article';
++
++    /**
++     * @return mixed
++     */
++    public function last() {
++        return $this->query("
++        SELECT a.id, a.titre, a.contenu, a.date, a.added_date, c.nom as cat_nom
++        FROM article a
++        LEFT JOIN category c on a.categorie_id = c.id
++        ORDER BY a.added_date DESC 
++        LIMIT 3;
++        ");
++
++    }
++
++    /**
++     * @param $id
++     * @return mixed
++     */
++    public function find($id) {
++        return $this->query("
++        SELECT a.id, a.titre, a.contenu, a.date, a.added_date, c.nom as cat_nom
++        FROM article a
++        LEFT JOIN category c on a.categorie_id = c.id
++        WHERE a.id = ?
++        ", [$id], true);
++
++    }
++
++    /**
++     * @param $cat_id
++     * @return mixed
++     */
++    public function lastByCategory($cat_id) {
++        return $this->query("
++        SELECT a.id, a.titre, a.contenu, a.date, a.added_date, c.nom as cat_nom
++        FROM article a
++        LEFT JOIN category c on a.categorie_id = c.id
++        WHERE a.categorie_id = ?
++        ORDER BY a.added_date DESC 
++        LIMIT 3;
++        ", [$cat_id], false);
++    }
++
++}
+\ No newline at end of file
+Index: app/Table/CategoryTable.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/Table/CategoryTable.php	(date 1538299486000)
++++ app/Table/CategoryTable.php	(date 1538299486000)
+@@ -0,0 +1,17 @@
++<?php
++/**
++ * Created by PhpStorm.
++ * User: ubuguy
++ * Date: 28/09/18
++ * Time: 17:07
++ */
++
++namespace App\Table;
++
++use Core\Table\Table;
++
++class CategoryTable extends Table
++{
++    protected $table = 'category';
++
++}
+\ No newline at end of file
+Index: app/Table/Article.php
+===================================================================
+--- app/Table/Article.php	(date 0)
++++ app/Table/Article.php	(date 0)
+@@ -1,49 +0,0 @@
+-<?php
+-
+-
+-namespace App\Table;
+-
+-
+-use App\App;
+-
+-class Article extends Table {
+-
+-
+-    protected static $table = 'articles';
+-
+-    public static function lastByCategorie($id)
+-    {
+-        return self::query("
+-                                SELECT a.id, a.titre, a.contenu, c.nom 
+-                                FROM articles a 
+-                                LEFT JOIN categories c 
+-                                ON a.categorie_id = c.id
+-                                where c.id = ? ", [$id]);
+-    }
+-
+-    public function getUrl() {
+-
+-        return 'index.php?p=article&id=' . $this->id;
+-
+-    }
+-
+-    public function getExtrait() {
+-
+-        $html ='<p>' . substr($this->contenu, 0, 300) . '... ';
+-        $html .= '<a href="' . $this->getUrl() . '">Voir la suite</a></p>';
+-        return $html;
+-    }
+-
+-    public function getLast() {
+-        return self::query("
+-                                SELECT a.id, a.titre, a.contenu, c.nom as cat_nom
+-                                FROM articles a 
+-                                LEFT JOIN categories c 
+-                                ON a.categorie_id = c.id
+-                                ORDER BY a.added_date DESC
+-                                LIMIT 3");
+-    }
+-
+-
+-
+-}
+\ No newline at end of file
+Index: app/Entity/ArticleEntity.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/Entity/ArticleEntity.php	(date 1538299486000)
++++ app/Entity/ArticleEntity.php	(date 1538299486000)
+@@ -0,0 +1,30 @@
++<?php
++/**
++ * Created by PhpStorm.
++ * User: ubuguy
++ * Date: 29/09/18
++ * Time: 10:13
++ */
++
++namespace App\Entity;
++
++use Core\Entity\Entity;
++
++class ArticleEntity extends Entity
++{
++
++
++
++    public function getUrl() {
++        return 'index.php?p=posts.show&id=' . $this->id;
++    }
++
++    public function getExtrait() {
++        $html = '<p>' . substr($this->contenu, 0, 200) . '...</p>';
++        $html .= '<p><a href="' . $this->getUrl() . '">Voir la suite</a>';
++        return $html;
++    }
++
++
++
++}
+\ No newline at end of file
+Index: app/Entity/CategoryEntity.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/Entity/CategoryEntity.php	(date 1538299486000)
++++ app/Entity/CategoryEntity.php	(date 1538299486000)
+@@ -0,0 +1,20 @@
++<?php
++/**
++ * Created by PhpStorm.
++ * User: ubuguy
++ * Date: 29/09/18
++ * Time: 10:38
++ */
++
++namespace App\Entity;
++
++
++class CategoryEntity
++{
++
++    public function getUrl() {
++        return 'index.php?p=posts.category&id=' . $this->id;
++    }
++
++
++}
+\ No newline at end of file
+Index: app/Autoloader.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/Autoloader.php	(date 1538299486000)
++++ app/Autoloader.php	(date 1538299486000)
+@@ -0,0 +1,30 @@
++<?php
++namespace App;
++
++
++/**
++ * Class Autoloader
++ * @package Tutoriel
++ */
++class Autoloader{
++
++    /**
++     * Enregistre notre autoloader
++     */
++    static function register(){
++        spl_autoload_register(array(__CLASS__, 'autoload'));
++    }
++
++    /**
++     * Inclue le fichier correspondant à notre classe
++     * @param $class string Le nom de la classe à charger
++     */
++    static function autoload($class){
++        if (strpos($class, __NAMESPACE__ . '\\') === 0){
++            $class = str_replace(__NAMESPACE__ . '\\', '', $class);
++            $class = str_replace('\\', '/', $class);
++            require __DIR__ . '/' . $class . '.php';
++        }
++    }
++
++}
+\ No newline at end of file
+Index: app/App.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/App.php	(date 1538299486000)
++++ app/App.php	(date 1538299486000)
+@@ -6,45 +6,79 @@
+  * Time: 12:10
+  */
+ 
+-namespace App;
+ 
++use Core\Config;
++use Core\Database\MysqlDatabase;
+ 
++/**
++ * Class App with design Pattern : Factory + Dependency injection + Singleton
++ * @package App
++ */
+ class App
+ {
+ 
+-    const DB_HOST = 'localhost';
+-    const DB_NAME = 'blog';
+-    const DB_USER = 'tesdy';
+-    const DB_PASS = 'Root1234.';
+-    const DB_CHARSET = 'UTF8';
++    public $title = 'BD_Blog';
++    private $db_instance;
++    private static $_instance;
+ 
+-    private static $database;
+-    private static $title = 'BD_Blog';
++    /**
++     * @return App
++     */
++    public static function getInstance() {
++        // Singleton : unique App->_instance
++        if(is_null(self::$_instance)) {
++            self::$_instance = new App();
++        }
++        return self::$_instance;
++    }
+ 
+     /**
+-     * @return Database
++     * @param string $name
++     * @return mixed
+      */
+-    public static function getDb() {
++    public function getTable($name) {
++        $class_name = 'App\\Table\\' . ucfirst($name) . 'Table';
++        // Dependency injection of Database for xxxTable
++        return new $class_name($this->getDb());
++    }
+ 
+-        if(is_null(self::$database)) {
+-            self::$database = new Database(self::DB_NAME,self::DB_USER,self::DB_PASS,self::DB_HOST, self::DB_CHARSET);
++    /**
++     * @return MysqlDatabase
++     */
++    public function getDb()
++    {
++        $config = Config::getInstance(ROOT . '/config/config.php');
++        // Singleton : unique App->db_Instance
++        if (is_null($this->db_instance)) {
++            $this->db_instance = new MysqlDatabase($config->get('db_name'), $config->get('db_host'), $config->get('db_user'), $config->get('db_pass'), $config->get('db_charset'));
+         }
+-        return self::$database;
++        return $this->db_instance;
++    }
++
++
++    public static function load() {
++        session_start();
++        require ROOT . '/app/Autoloader.php';
++        App\Autoloader::Register();
++        require ROOT . '/core/Autoloader.php';
++        Core\Autoloader::Register();
++
++
+     }
+ 
+     public static function notFound() {
+-        header("HTTP/1.0 404 NOT FOUND");
+-        header("Location: index.php?p=404");
++        header("HTTP/1.0 404 Not Found", true, 404);
++        header('Location: index.php?p=error');
+     }
+ 
+-
++    public function forbidden()
++    {
++        header('HTTP/1.0 403 Forbidden');
++        die('Accès interdit');
+ 
+-    public static function getTitle() {
+-        return self::$title;
+     }
+ 
+-    public static function setTitle($title) {
+-        self::$title = $title;
+-    }
++
++
+ 
+ }
+\ No newline at end of file
+Index: core/Auth/DBAuth.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- core/Auth/DBAuth.php	(date 1538299486000)
++++ core/Auth/DBAuth.php	(date 1538299486000)
+@@ -0,0 +1,60 @@
++<?php
++
++namespace Core\Auth;
++
++
++use Core\Database\Database;
++
++/**
++ * Class DBAuth
++ * @package Core\Auth
++ */
++class DBAuth
++{
++
++    private $db;
++
++    /**
++     * DBAuth constructor.
++     * @param Database $db
++     */
++    public function __construct(Database $db)
++    {
++        $this->db = $db;
++    }
++
++    public function getUserId() {
++        if($this->logged()) {
++            return $_SESSION['auth'];
++        } else {
++            return false;
++        }
++    }
++
++    /**
++     * @param $username
++     * @param $password
++     * @return boolean
++     */
++    public function login($username, $password)
++    {
++
++        $user = $this->db->prepare('SELECT * FROM users WHERE username = ?', [$username], __CLASS__ , true);
++        if($user) {
++            if($user->password === sha1($password)) {
++                $_SESSION['auth'] = $user->id;
++                return true;
++            }
++        }
++        return false;
++    }
++
++    public function logged()
++    {
++        return isset($_SESSION['auth']);
++    }
++
++
++
++
++}
+\ No newline at end of file
+Index: core/HTML/Form.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- core/HTML/Form.php	(date 1538299486000)
++++ core/HTML/Form.php	(date 1538299486000)
+@@ -0,0 +1,74 @@
++<?php
++/**
++ * Created by PhpStorm.
++ * User: ubuguy
++ * Date: 29/09/18
++ * Time: 14:07
++ */
++
++namespace Core\HTML;
++
++
++/**
++ * Class Form
++ * @package Core\HTML
++ */
++class Form
++{
++
++    private $data;
++    private $surround = 'p';
++
++
++    /**
++     * Form constructor.
++     * @param array $data
++     */
++    public function __construct($data = array())
++    {
++        $this->data = $data;
++    }
++
++    /**
++     * @param $html
++     * @return string
++     */
++    protected function surround($html) {
++        return "<{$this->surround}>{$html}</{$this->surround}>";
++    }
++
++    /**
++     * @param $index
++     * @return mixed|null
++     */
++    protected function getValue($index)
++    {
++        if(is_object($this->data)) {
++            return $this->data->$index;
++        }
++        return isset($this->data[$index]) ? $this->data[$index] : null;
++    }
++
++    /**
++     * @param $name
++     * @param $label
++     * @param array $options
++     * @return string
++     */
++    public function input($name, $label, $options = [])
++    {
++        $type = isset($options['type']) ? $options['type'] : 'text';
++        return $this->surround(
++            "<input type='{$type}' name='{$name}' value='{$this->getValue($name)}'>"
++        );
++    }
++
++    /**
++     * @return string
++     */
++    public function submit() {
++        return $this->surround('<button type="submit">Envoyer</button>');
++    }
++
++
++}
+\ No newline at end of file
+Index: core/HTML/BootstrapForm.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- core/HTML/BootstrapForm.php	(date 1538299486000)
++++ core/HTML/BootstrapForm.php	(date 1538299486000)
+@@ -0,0 +1,57 @@
++<?php
++/**
++ * Created by PhpStorm.
++ * User: ubuguy
++ * Date: 29/09/18
++ * Time: 14:04
++ */
++
++namespace Core\HTML;
++
++
++/**
++ * Class BootstrapForm
++ * @package Core\HTML
++ */
++class BootstrapForm extends Form
++{
++
++    /**
++     * @param $html
++     * @return string
++     */
++    protected function surround($html)
++    {
++        return "<div class='form-group'>{$html}</div>";
++    }
++
++
++    /**
++     * @param $name
++     * @param $label
++     * @param array $options
++     * @return string
++     */
++    public function input($name, $label, $options = [])
++    {
++        $type = isset($options['type']) ? $options['type'] : 'text';
++        $label = "<label>{$label}</label>";
++        if($type === 'textarea') {
++            $input ="<textarea name='{$name}' class='form-control'>{$this->getValue($name)}</textarea>";
++
++        } else {
++            $input ="<input type='{$type}' name='{$name}' value='{$this->getValue($name)}' id='{$name}' class='form-control'>";
++        }
++        return $this->surround($label . $input);
++    }
++
++
++    /**
++     * @return string
++     */
++    public function submit()
++    {
++        return $this->surround('<button type="submit" class="btn btn-primary">Envoyer</button>');
++    }
++
++}
+\ No newline at end of file
+Index: core/Table/Table.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- core/Table/Table.php	(date 1538299486000)
++++ core/Table/Table.php	(date 1538299486000)
+@@ -0,0 +1,78 @@
++<?php
++/**
++ * Created by PhpStorm.
++ * User: ubuguy
++ * Date: 28/09/18
++ * Time: 17:07
++ */
++
++namespace Core\Table;
++
++use Core\Database\Database;
++
++/**
++ * Class Table with design Pattern : Dependency Injection
++ * @package App\Table
++ */
++class Table
++{
++    protected $table;
++    protected $db;
++
++    /**
++     * Constructor with Dependency Injection : App\Database\Database
++     * Table constructor.
++     * @param Database $db
++     */
++    public function __construct(Database $db)
++    {
++        $this->db = $db;
++        if(is_null($this->table)) {
++        $parts = explode('\\', get_class($this));
++        $class_name = end($parts);
++        $this->table = strtolower(str_replace('Table', '', $class_name)) . 's';
++        }
++    }
++
++    /**
++     * @return mixed
++     */
++    public function all() {
++        return $this->query("SELECT * FROM " . $this->table);
++    }
++
++    public function query($statement, $attributs = null, $one = false) {
++        if($attributs) {
++            return $this->db->prepare(
++                $statement,
++                $attributs,
++                str_replace('Table', 'Entity', get_class($this)),
++                $one);
++
++        } else  {
++            return $this->db->query(
++                $statement,
++                str_replace('Table', 'Entity', get_class($this)),
++                $one);
++
++        }
++
++    }
++
++    public function find($id) {
++        return $this->query("SELECT * FROM {$this->table} WHERE id = ?;", array($id), true);
++    }
++
++    public function update($id, $fields) {
++        $sql_parts = [];
++        $attributes = [];
++        foreach ($fields as $field => $value) {
++            $sql_parts[] = "$field = ?";
++            $attributes[] = $value;
++        }
++        $attributes[] = $id;
++        $sql_part = implode(', ', $sql_parts);
++        return $this->query("UPDATE {$this->table} SET $sql_part WHERE id = ?;", $attributes, true);
++    }
++
++}
+\ No newline at end of file
+Index: core/Entity/Entity.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- core/Entity/Entity.php	(date 1538299486000)
++++ core/Entity/Entity.php	(date 1538299486000)
+@@ -0,0 +1,22 @@
++<?php
++/**
++ * Created by PhpStorm.
++ * User: ubuguy
++ * Date: 29/09/18
++ * Time: 10:30
++ */
++
++
++namespace Core\Entity;
++
++class Entity
++{
++    public function __get($key) {
++
++        $method = 'get' . ucfirst($key);
++        $this->$key = $this->$method();
++        return $this->$key;
++    }
++
++
++}
+\ No newline at end of file
+Index: core/Database/Database.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- core/Database/Database.php	(date 1538299486000)
++++ core/Database/Database.php	(date 1538299486000)
+@@ -0,0 +1,12 @@
++<?php
++
++namespace Core\Database;
++
++
++Class Database
++{
++
++
++
++
++}
+\ No newline at end of file
+Index: core/Database/MysqlDatabase.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- core/Database/MysqlDatabase.php	(date 1538299486000)
++++ core/Database/MysqlDatabase.php	(date 1538299486000)
+@@ -0,0 +1,127 @@
++<?php
++/**
++ * Created by PhpStorm.
++ * User: ubuguy
++ * Date: 27/09/18
++ * Time: 09:46
++ */
++
++namespace Core\Database;
++
++
++use PDO;
++
++/**
++ * Class Database
++ * @package App
++ */
++class MysqlDatabase extends Database
++{
++
++    private $db_name;
++    private $db_user;
++    private $db_pass;
++    private $db_host;
++    private $db_charset;
++    private $pdo;
++
++
++    /**
++     * Database constructor.
++     * @param string $db_name : Database name
++     * @param string $db_host : Database hostname
++     * @param string $db_user : Username
++     * @param string $db_pass : User password
++     * @param string $db_charset : Character Encoding
++     */
++    public function __construct($db_name, $db_host, $db_user, $db_pass, $db_charset) {
++
++        $this->db_name = $db_name;
++        $this->db_user = $db_user;
++        $this->db_pass = $db_pass;
++        $this->db_host = $db_host;
++        $this->db_charset = $db_charset;
++    }
++
++    /**
++     * @return object PDO
++     */
++    private function getPDO() {
++        // empêcher la multiplication d'instance de PDO :
++        if(is_null($this->pdo)) {;
++            $pdo = new PDO("mysql:dbname=$this->db_name;host=$this->db_host;", $this->db_user, $this->db_pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES '" . $this->db_charset . "'"));
++            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
++            $this->pdo = $pdo;
++        }
++        return $this->pdo;
++    }
++
++
++    /**
++     * @param $statement
++     * @param $class_name
++     * @param bool $one
++     * @return array
++     */
++    public function query($statement, $class_name = null, $one = false)
++    {
++        $req = $this->getPDO()->query($statement);
++        // gestion des !SELECT :
++        if(
++            strpos($statement, 'UPDATE') === 0 ||
++            strpos($statement, 'INSERT') === 0 ||
++            strpos($statement, 'DELETE') === 0
++        ) {
++            return $req;
++        }
++        if(is_null($class_name)) {
++            $req->setFetchMode(PDO::FETCH_OBJ);
++
++        } else {
++            $req->setFetchMode(PDO::FETCH_CLASS, $class_name);
++        }
++        if($one) {
++            $datas = $req->fetch();
++        } else {
++            $datas = $req->fetchAll();
++        }
++        return $datas;
++    }
++
++
++    /**
++     * @param $statement ( Prepared statement ! )
++     * @param $attributes ( values for the parameters of the statement template )
++     * @param $class_name ( Name of the class where to retrieve datas )
++     * @param bool $one ( List or Single )
++     * @return array|mixed ( object with db data )
++     */
++    public function prepare($statement, $attributes, $class_name = null, $one = false) {
++        $req = $this->getPDO()->prepare($statement);
++        $res = $req->execute($attributes);
++        // gestion des !SELECT :
++        if(
++            strpos($statement, 'UPDATE') === 0 ||
++            strpos($statement, 'INSERT') === 0 ||
++            strpos($statement, 'DELETE') === 0
++        ) {
++            return $res;
++        }
++
++        if($class_name === null) {
++            $req->setFetchMode(PDO::FETCH_OBJ);
++        } else {
++            $req->setFetchMode(PDO::FETCH_CLASS, $class_name);
++        }
++        if($one) {
++            $datas = $req->fetch();
++        } else {
++            $datas = $req->fetchAll();
++
++        }
++        return $datas;
++    }
++
++
++
++}
+\ No newline at end of file
+Index: core/Config.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- core/Config.php	(date 1538299486000)
++++ core/Config.php	(date 1538299486000)
+@@ -0,0 +1,57 @@
++<?php
++/**
++ * Created by PhpStorm.
++ * User: ubuguy
++ * Date: 28/09/18
++ * Time: 16:38
++ */
++
++namespace Core;
++
++
++class Config
++{
++
++    private $settings = [];
++    private static $_instance;
++
++    /**
++     * Singleton Instance
++     * @param $file
++     * @return Config
++     */
++    public static function getInstance($file)
++    {
++        // Singleton
++        if(is_null(self::$_instance)) {
++            self::$_instance = new Config($file);
++        }
++        return self::$_instance;
++    }
++
++    /**
++     * Config constructor.
++     * data array for access to the database
++     * @param $file
++     */
++    public function __construct($file)
++    {
++//        $this->id = uniqid(); // check uniq instance
++        $this->settings = require($file);
++    }
++
++    /**
++     * @param $key
++     * @return mixed|null
++     */
++    public function get($key)
++    {
++        if(!isset($this->settings[$key])) {
++            return null;
++        }
++        return $this->settings[$key];
++    }
++
++
++
++}
+\ No newline at end of file
+Index: core/Autoloader.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- core/Autoloader.php	(date 1538299486000)
++++ core/Autoloader.php	(date 1538299486000)
+@@ -0,0 +1,30 @@
++<?php
++namespace Core;
++
++
++/**
++ * Class Autoloader
++ * @package Tutoriel
++ */
++class Autoloader{
++
++    /**
++     * Enregistre notre autoloader
++     */
++    static function register(){
++        spl_autoload_register(array(__CLASS__, 'autoload'));
++    }
++
++    /**
++     * Inclue le fichier correspondant à notre classe
++     * @param $class string Le nom de la classe à charger
++     */
++    static function autoload($class){
++        if (strpos($class, __NAMESPACE__ . '\\') === 0){
++            $class = str_replace(__NAMESPACE__ . '\\', '', $class);
++            $class = str_replace('\\', '/', $class);
++            require __DIR__ . '/' . $class . '.php';
++        }
++    }
++
++}
+\ No newline at end of file
+Index: config/config.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- config/config.php	(date 1538299486000)
++++ config/config.php	(date 1538299486000)
+@@ -0,0 +1,10 @@
++<?php
++
++
++return array(
++    'db_user' => 'tesdy',
++    'db_pass' => 'Root1234.',
++    'db_host' => 'localhost',
++    'db_name' => 'blog',
++    'db_charset' => 'UTF8'
++);
+\ No newline at end of file
+Index: public/images/icons8-reading-80.png
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- public/images/icons8-reading-80.png	(date 1538299486000)
++++ public/images/icons8-reading-80.png	(date 1538299486000)
+@@ -0,0 +1,12 @@
++�PNG
++
++   
++IHDR   P   P   ��   sRGB ���   gAMA  ���a   	pHYs  �  ��o�d  �IDATx^�g�55���{{���E�#VPQE�*(Q,����l�X@EA�a��b<��w`�����N���o^x�����9��3I&��^�z��իt-��M�|
++��><��Ы���J������a���,\����g�N�,K�p����`�'u(XV��p+ls�5�I�o�-`���p#�<[��Z ������ak�V�7@��㡍� ~���ͪ�)m���A*-��e�X��0�!a�k��W[rɖ�4X�?��P��I߂=�An-�V˼��ʘ��Ƚ`�O-�����u�8kG|]O�&�қ`����2���R�����,��KqrH�	��!�6�B�H�?�[S��矪Rj~8�@��F���MY6���bx�ϊ���v�=g��P��s�Т�pMG�R�Zl1����M?�-��]�.˗���<�#�c-��l%����[�C���Vʻ`˺v�E�I��g�ɮ�q״c��e�Yg�_![�}fE�v}�6=�u4X���Й]��xK|	<礂7uGFՑ`�@����x�ԙ����u`�CX��d\4_[�Sb�C�������ոqx�q����n^�(�ħ��s���2o9wΧ�\�˛��\	qC�r(*��9��B��t�q�>�r�CQ�!�4�
++!ri����x� ����`9�񋗝Y��NG�r��h�*5�&��y[�eYf':�1/�q��$TL�9L�}7�,��i�*\��t��*լT-0dY�yW�*\ǀ�8"q�+�,#F?�]����u(ȥz���Nh_p�ߩ-�s0��Ӽ-ò����m�I:���ͼߪR���ܹJ��y���U���t�*�V�y{�K:���z̻��/�l�+�t4�Ҵ-�<�>{�bl�J�T2/����w�\n�s]g�S�25�2�"�r�˧�aZ��*��88%3�&��b_nOpU��:<�\�w�2�Ji��s}F\w���R�1�<g\�
++Y΁���w�ޑ�a�ݛ��
++t��㇍v}u�],i��Q��
++�N��R���>�TR_�-��
++�c`K�1� ��R���JOe�L������? e�Dԇ��G�[b�s��4h�>M��t�{<�v냾x|d���N�
++C�\��'Zh:b�6jkح��c���
++�lrߚ��(�qE�U0�=�9c�6�͢�R����z���U*�bWd}٘����G V_M[<An��6m�Vm��WtA��]Q�M ��p^w�lS�՞la�0�ZkX����S]��3j��i�D�_kE�]IS}cF��Mڦ�M��9��&_Kg.�m�s������6i�66ɷ}x=k�y,��|�Z�ՋǳM���o�4�i����剚��e:��hk]�)�}|�z"���C�r�S�.A�LOA�1�j�v}����e���%��bа/��h$��_�q���k���~av��b��'����Ho��kc�=�K�Y��A_z��իW�^il�?�ƒbߒG    IEND�B`�
+\ No newline at end of file
+Index: public/admin.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- public/admin.php	(date 1538299486000)
++++ public/admin.php	(date 1538299486000)
+@@ -0,0 +1,45 @@
++<?php
++/**
++ * Created by PhpStorm.
++ * User: ubuguy
++ * Date: 29/09/18
++ * Time: 13:38
++ */
++
++use Core\Auth\DBAuth;
++
++define('ROOT', dirname(__DIR__));
++require ROOT . '/app/App.php';
++
++App::load();
++
++
++if(isset($_GET['p'])) {
++    $page = $_GET['p'];
++} else {
++
++    $page = 'home';
++
++}
++
++// Authentification
++$app = App::getInstance();
++
++$auth = new DBAuth($app->getDb());
++if(!$auth->logged()) {
++    $app->forbidden();
++}
++
++ob_start();
++if($page === 'home') {
++    require ROOT . '/pages/admin/posts/index.php';
++} elseif ($page === 'posts.edit'){
++    require ROOT . '/pages/admin/posts/edit.php';
++} elseif ($page === 'posts.show'){
++    require ROOT . '/pages/admin/posts/show.php';
++} else {
++    require ROOT . '/pages/admin/error.php';
++}
++
++$content = ob_get_clean();
++require ROOT . '/pages/templates/default.php';
+Index: public/index.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- public/index.php	(date 1538299486000)
++++ public/index.php	(date 1538299486000)
+@@ -0,0 +1,39 @@
++<?php
++/**
++ * Created by PhpStorm.
++ * User: ubuguy
++ * Date: 27/09/18
++ * Time: 08:18
++ */
++
++
++define('ROOT', dirname(__DIR__));
++require ROOT . '/app/App.php';
++
++App::load();
++
++
++if(isset($_GET['p'])) {
++    $page = $_GET['p'];
++} else {
++
++    $page = 'home';
++
++}
++
++ob_start();
++if($page === 'home') {
++    require ROOT . '/pages/posts/home.php';
++} elseif ($page === 'posts.category'){
++    require ROOT . '/pages/posts/category.php';
++} elseif ($page === 'posts.show'){
++    require ROOT . '/pages/posts/show.php';
++} elseif ($page === 'login'){
++require ROOT . '/pages/users/login.php';
++} else {
++    require ROOT . '/pages/error.php';
++}
++
++
++$content = ob_get_clean();
++require ROOT . '/pages/templates/default.php';
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .gitignore	(date 1538299486000)
++++ .gitignore	(date 1538299486000)
+@@ -0,0 +1,4 @@
++# exclude config file
++app/App.php
++config/*
++congig
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/vcs.xml	(date 1538299486000)
++++ .idea/vcs.xml	(date 1538299486000)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(date 1538299486000)
++++ .idea/misc.xml	(date 1538299486000)
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="JavaScriptSettings">
++    <option name="languageLevel" value="ES6" />
++  </component>
++  <component name="ProjectPlainTextFileTypeManager">
++    <file url="file://$PROJECT_DIR$/../bdblog/app/Table/Article.php" />
++    <file url="file://$PROJECT_DIR$/../bdblog/app/Table/Categorie.php" />
++    <file url="file://$PROJECT_DIR$/../bdblog/app/Table/Table.php" />
++    <file url="file://$PROJECT_DIR$/../bdblog/pages/single.php" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/bdblog.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/bdblog.iml	(date 1538299486000)
++++ .idea/bdblog.iml	(date 1538299486000)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="WEB_MODULE" version="4">
++  <component name="NewModuleRootManager">
++    <content url="file://$MODULE_DIR$" />
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/modules.xml	(date 1538299486000)
++++ .idea/modules.xml	(date 1538299486000)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/../bdblog/.idea/bdblog.iml" filepath="$PROJECT_DIR$/../bdblog/.idea/bdblog.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: pages/admin/posts/edit.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pages/admin/posts/edit.php	(date 1538299486000)
++++ pages/admin/posts/edit.php	(date 1538299486000)
+@@ -0,0 +1,23 @@
++<?php
++
++$articleTable = App::getInstance()->getTable('article');
++
++if(!empty($_POST)) {
++    $articleTable->update($_GET['id'], array(
++        'titre' => $_POST['titre'],
++        'contenu' => $_POST['contenu']
++        ));
++}
++$article = $articleTable->find($_GET['id']);
++$form = new \Core\HTML\BootstrapForm($article);
++
++?>
++
++
++<form method="post">
++
++    <?= $form->input('titre', 'Titre de l\'article'); ?>
++    <?= $form->input('contenu', 'Contenu', ['type' => 'textarea']); ?>
++    <button class="btn btn-primary">Envoyer</button>
++
++</form>
+\ No newline at end of file
+Index: pages/admin/posts/index.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pages/admin/posts/index.php	(date 1538299486000)
++++ pages/admin/posts/index.php	(date 1538299486000)
+@@ -0,0 +1,38 @@
++<?php
++/**
++ * Created by PhpStorm.
++ * User: ubuguy
++ * Date: 29/09/18
++ * Time: 13:41
++ */
++
++$articles = App::getInstance()->getTable('article')->all();
++?>
++
++<h1>Administrer les articles</h1>
++
++<table class="table">
++    <thead>
++    <tr>
++        <td>Id</td>
++        <td>Titre</td>
++        <td>Action</td>
++    </tr>
++    </thead>
++    <tbody>
++    <?php
++    foreach ($articles as $article):?>
++
++    <tr>
++        <td><?= $article->id ?></td>
++        <td><?= $article->titre ?></td>
++        <td>
++            <a href="?p=posts.edit&id=<?= $article->id ?>" class="btn btn-primary">Editer</a>
++        </td>
++    </tr>
++
++    <?php
++    endforeach;
++    ?>
++    </tbody>
++</table>
+\ No newline at end of file
+Index: pages/posts/home.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pages/posts/home.php	(date 1538299486000)
++++ pages/posts/home.php	(date 1538299486000)
+@@ -0,0 +1,25 @@
++<div class="row">
++    <div class="col-sm-8">
++
++        <?php foreach (App::getInstance()->getTable('Article')->last() as $article): ?>
++
++            <h2><a href="<?= $article->url ?>"><?= $article->titre ?></a> <span style="font-size: small">(<?= $article->cat_nom ?>)</span></h2>
++
++            <p><?= nl2br($article->extrait) ?></p>
++
++
++        <?php endforeach; ?>
++
++    </div>
++    <div class="col-sm-4">
++        <h3><em>Liste des catégories</em></h3>
++        <ul>
++            <?php
++            foreach (App::getInstance()->getTable('Category')->all() as $categorie): ?>
++                <li><a href="index.php?p=posts.category&id=<?= $categorie->id ?>"><?= $categorie->nom ?></a></li>
++            <?php
++            endforeach;
++            ?>
++        </ul>
++    </div>
++</div>
+Index: pages/posts/show.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pages/posts/show.php	(date 1538299486000)
++++ pages/posts/show.php	(date 1538299486000)
+@@ -0,0 +1,16 @@
++<?php
++
++$app = App::getInstance();
++
++$article = $app->getTable('Article')->find($_GET['id']);
++
++if($article === false) {
++    $app->notFound();
++}
++
++$app->title = $article->titre;
++?>
++
++<h2><?= $article->titre; ?> <span style="font-size: small">(<?= $article->cat_nom ?>)</span></h2>
++
++<p><?= $article->contenu; ?></p>
+Index: pages/posts/category.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pages/posts/category.php	(date 1538299486000)
++++ pages/posts/category.php	(date 1538299486000)
+@@ -0,0 +1,43 @@
++<?php
++
++$app = App::getInstance();
++
++$categorie = $app->getTable('Category')->find($_GET['id']);
++
++if($categorie === false) {
++    $app->notFound();
++}
++
++$articles = $app->getTable('Article')->lastByCategory($_GET['id']);
++$categories = $app->getTable('Category')->all();
++?>
++
++<h1><?= $categorie->nom ?></h1>
++
++<div class="row">
++    <div class="col-sm-8">
++
++        <?php if(!empty($articles)){
++            foreach ($articles as $article) {
++                ?>
++                <h2><a href="<?= $article->url ?>"><?= $article->titre; ?></a></h2>
++                <p><?= $article->extrait; ?></p>
++                <?php
++            } // end foreach
++        }  else { // endif ?>
++            <p>Pas de BD dans cette catégorie.</p>
++        <?php } ?>
++    </div>
++
++    <div class="col-sm-4">
++        <h3><em>Liste des catégories</em></h3>
++        <ul>
++            <?php
++            foreach ($categories as $categorie): ?>
++                <li><a href="index.php?p=posts.category&id=<?= $categorie->id ?>"><?= $categorie->nom ?></a></li>
++            <?php
++            endforeach;
++            ?>
++        </ul>
++    </div>
++</div>
+Index: pages/users/login.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pages/users/login.php	(date 1538299486000)
++++ pages/users/login.php	(date 1538299486000)
+@@ -0,0 +1,27 @@
++<?php
++
++if(!empty($_POST)) {
++    $auth = new \Core\Auth\DBAuth(App::getInstance()->getDb());
++    if($auth->login($_POST['username'], $_POST['password'])) {
++        header('Location: admin.php');
++    } else {
++        ?>
++
++        <div class="alert alert-danger">
++            Identifiants Incorrects
++        </div>
++<?php
++    }
++}
++
++$form = new Core\HTML\BootstrapForm($_POST);
++?>
++
++
++<form method="post">
++
++    <?= $form->input('username', 'Pseudo'); ?>
++    <?= $form->input('password', 'Mot de Passe', ['type'=> 'password']); ?>
++    <button class="btn btn-primary">Envoyer</button>
++
++</form>
+\ No newline at end of file
+Index: pages/error.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pages/error.php	(date 1538299486000)
++++ pages/error.php	(date 1538299486000)
+@@ -0,0 +1,3 @@
++<h1>Désolé cette page n'existe pas !</h1>
++
++<p><a href="index.php">Retour à l'acceuil</a></p>
+\ No newline at end of file
+Index: pages/templates/default.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pages/templates/default.php	(date 1538299486000)
++++ pages/templates/default.php	(date 1538299486000)
+@@ -0,0 +1,54 @@
++<!doctype html>
++<html lang="en">
++<head>
++    <meta charset="utf-8">
++    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
++    <meta name="description" content="">
++    <meta name="author" content="">
++    <link rel="icon" href="../public/images/icons8-reading-80.png">
++
++    <title>
++        <?php echo App::getInstance()->title; ?>
++    </title>
++
++    <!-- Bootstrap core CSS -->
++    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
++    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
++
++
++</head>
++
++<body>
++
++<header>
++    <div class="navbar navbar-dark bg-dark shadow-sm">
++        <div class="container d-flex justify-content-between">
++            <a href="index.php" class="navbar-brand d-flex align-items-center">
++
++            <span style="font-size: 1em; color: #69c8ff;">
++                <i class="fas fa-book"></i>
++            </span>
++                <strong>BD_Blog</strong>
++            </a>
++
++            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
++                <span class="navbar-toggler-icon"></span>
++            </button>
++        </div>
++    </div>
++</header>
++
++<main role="main">
++
++</main>
++
++<div class="container">
++    <div class="starter-template" style="padding-top: 50px">
++<?= $content; ?>
++    </div>
++
++</div>
++
++
++</body>
++</html>
+Index: pages/article.php
+===================================================================
+--- pages/article.php	(date 0)
++++ pages/article.php	(date 0)
+@@ -1,22 +0,0 @@
+-<?php
+-
+-use App\App;
+-use App\Table\Article;
+-use App\Table\Categorie;
+-
+-$article = Article::find($_GET['id']);
+-
+-if($article === false) {
+-    App::notFound();
+-}
+-
+-
+-$categorie = Categorie::find($article->categorie_id);
+-
+-
+-App::setTitle("BD_Blog - " . $article->nom);
+-?>
+-
+-<h2><?= $article->titre; ?> <span style="font-size: small">(<?= $categorie->nom ?>)</span></h2>
+-
+-<p><?= $article->contenu; ?></p>
+Index: pages/categorie.php
+===================================================================
+--- pages/categorie.php	(date 0)
++++ pages/categorie.php	(date 0)
+@@ -1,55 +0,0 @@
+-<?php
+-
+-use \App\Table\Categorie;
+-use \App\Table\Article;
+-use \App\App;
+-
+-
+-$categorie = Categorie::find($_GET['id']);
+-if($categorie === false) {
+-    App::notFound();
+-}
+-$articles = Article::lastByCategorie($_GET['id']);
+-$categorieList = Categorie::all();
+-
+-App::setTitle("BD_Blog - " . $categorie->nom);
+-?>
+-
+-<h1>Catégorie <?= $categorie->nom ?></h1>
+-<?php
+-
+-?>
+-<div class="row">
+-    <div class="col-sm-8">
+-
+-        <?php
+-        if (!empty($articles)) {
+-
+-            foreach ($articles as $article): ?>
+-                <ul>
+-                    <li>
+-                        <h2><a href="<?= $article->url ?>"><?= $article->titre ?></a></h2>
+-                        <p><?= nl2br($article->extrait) ?></p>
+-                    </li>
+-
+-                </ul>
+-            <?php endforeach;
+-
+-        } else { ?>
+-            <p><em>Rien dans cette catégorie.</em></p>
+-        <?php } ?>
+-    </div>
+-
+-    <div class="col-sm-4">
+-        <h3><em>Liste des catégories</em></h3>
+-        <ul>
+-            <?php
+-            foreach (\App\Table\Categorie::all() as $categories ): ?>
+-                <li><a href="index.php?p=categorie&id=<?= $categories->id ?>"><?= $categories->nom ?></a></li>
+-            <?php
+-            endforeach;
+-            ?>
+-        </ul>
+-    </div>
+-</div>
+-
