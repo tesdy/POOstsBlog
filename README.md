@@ -35,8 +35,7 @@ Dans ce projet on trouvera 2 controlleurs :
   <li><em>Le controlleur général</em> du 'framework' : dossier core/Controller
   <li><em>Le controlleur spécifique</em> de l'application : dossier app/Controller
 </ul>
-<em>On trouve donc une partie 'core' réutilisable pour tout type de projet et le reste de l'application qui est "particulier" 
-à ce projet.</em>
+<em>On trouve donc une partie 'core' réutilisable pour tout type de projet.</em>
 
 
 <h3>Intégration coté client</h3>
