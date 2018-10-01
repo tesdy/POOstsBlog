@@ -12,16 +12,16 @@ reprise du thème proposé au cours de la formation dont je n'avais pu fournir u
 
 Elle est construite sur une architecture se voulant MVC Modèle-Vue-Contrôleur avec la mise en place d'un cadre de travail 
 réutilisable.<br>
-Modèle (spécifique) : [dossiers app/Entity & app/Table] => appartient à l'application.
+<strong> Le Modèle</strong> (spécifique) : [dossiers app/Entity & app/Table] => appartient à l'application.
 Le Modèle est scindé en 2 parties : 
-- app/Entity : gère nos Objets.
-- app/Table : gère le CRUD.
+- <em>app/Entity</em> : gère nos Objets.
+- <em>app/Table</em> : gère le CRUD.
 
-La Vue (spécifique): dossier app/Views => appartient à l'application.
+<strong>La Vue</strong> (spécifique): dossier app/Views => appartient à l'application.
 
-Les Controlleurs (Global & Spécifique) : 
-- Le controlleur général (du 'framework') : dossier core/Controller
-- Le controlleur spécifique de l'application : dossier app/Controller
+<strong>Les Controlleurs</strong> (Global & Spécifique) : 
+- <em>Le controlleur général</em> (du 'framework') : dossier core/Controller
+- <em>Le controlleur spécifique</em> de l'application : dossier app/Controller
 On trouve donc une partie 'core' réutilisable pour tout type de projet et le reste de l'application qui est "particulier" 
 à ce projet.
 
