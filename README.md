@@ -24,8 +24,8 @@ Il scindé en 2 parties :
 <p>Partie qui contient les éléments visuels, ainsi que la logique nécessaire afin d'afficher les données provenant du modèle.</p>
 <ul>
   <li><em>app/Views</em> => Spécifique à chaque application.</li>
-  On trouvera malgré tout dans le core des méthodes de construction de formulaires, réutilisables pour de futures applications. (fichiers Form.php & BootstrapForm.php dans core/HTML/) 
 </ul>
+On trouvera malgré tout dans le core des méthodes de construction de formulaires, réutilisables pour de futures applications. (fichiers Form.php & BootstrapForm.php dans core/HTML/) 
 
 <h3>Controlleur</h3> 
 <p>Partie qui gère la dynamique de l’application. Fait le lien entre l’utilisateur et le reste de l’application.<br>
