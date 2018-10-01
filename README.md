@@ -13,21 +13,22 @@ Le projet a pour but de mettre en place un <strong><em>système de post d'articl
 
 Il est construit avec le pattern <strong>MVC</strong> (Modèle-Vue-Contrôleur) avec la construction d'un cadre de travail réutilisable.<br>
 
-<h3>Le Modèle</h3>
-<p>Il contient les données ainsi que de la logique en rapport avec les données.</p>
+<h3>Modèle</h3>
+<p>Partie qui contient les données ainsi que de la logique en rapport avec les données.</p>
 Il scindé en 2 parties : 
 <ul>
   <li><em>app/Entity</em> : gère nos Objets.
   <li><em>app/Table</em> : gère le CRUD.
 </ul>
-<h3>La Vue</h3>
+<h3>Vue</h3>
+<p>Partie qui contient les éléments visuels, ainsi que la logique nécessaire afin d'afficher les données provenant du modèle.</p>
 <ul>
-  <li><em>app/Views</em> => Spécifique à chaque application, les pages de la vue contiennent les éléments visuels, ainsi que la logique nécessaire afin d'afficher les données provenant du modèle.</li>
-  On trouvera malgré dans le core des méthodes de construction de formulaires, réutilisables pour de futurs applications. (fichiers Form.php & BootstrapForm.php dans core/HTML/) 
+  <li><em>app/Views</em> => Spécifique à chaque application.</li>
+  On trouvera malgré tout dans le core des méthodes de construction de formulaires, réutilisables pour de futures applications. (fichiers Form.php & BootstrapForm.php dans core/HTML/) 
 </ul>
 
-<h3>Le Controlleur</h3> 
-<p>Il gère la dynamique de l’application. Il fait le lien entre l’utilisateur et le reste de l’application.<br>
+<h3>Controlleur</h3> 
+<p>Partie qui gère la dynamique de l’application. Fait le lien entre l’utilisateur et le reste de l’application.<br>
 <em>Le chef d'orchestre</em></p>
 Dans ce projet on trouvera 2 controlleurs : 
 <ul>
@@ -37,10 +38,11 @@ Dans ce projet on trouvera 2 controlleurs :
 <em>On trouve donc une partie 'core' réutilisable pour tout type de projet et le reste de l'application qui est "particulier" 
 à ce projet.</em>
 
-Intégration coté client :<br>
-<strong>Langages</strong> : HTML, Css et Javascript.<br>
+
+<h3>Intégration coté client</h3>
+<strong>Langages</strong> : HTML, CSS et Javascript (JQuery).<br>
 Le site se voulant Responsive design : 
-Solution trouvée avec le <strong>Framework Bootstrap de Twitter</strong> (dernière version : 4.1) 
+- Solution trouvée avec le <strong>Framework Bootstrap de Twitter</strong> (dernière version : 4.1) 
 Ce choix permet l'implémentation de : 
 <ul>
   <li>Dropdowns 
@@ -49,7 +51,7 @@ Ce choix permet l'implémentation de :
 </ul>
 avec Jquery 
 
-Développement : 
+<h3>Développement</h3>
 Langage coté serveur : 
 <ul>
   <li><strong>PHP</strong> sur sa version 7 a naturellement été choisi comme langage de programmation pour produire les pages        Web dynamiques.</li>
@@ -58,9 +60,11 @@ Langage coté serveur :
   <li>SGBD (Système de Gestion de Base de Données).</li>
 </ul>
 
-Outils complémentaires :
+<h3>Outils complémentaires</h3>
+<p>Pour la réalisation de ce projet et pour sa présentation, différents outils ont été utilisés.
 <ul>
   <li>Cahier des charges réalisé avec Word.<br>
+  <li>Présentation visuelle avec PowerPoint</li>
   <li>Cacoo by nulab (en ligne) pour réaliser la maquette du site.<br>
   <li>Développement réalisé sur le système Linux Ubuntu 18.04.<br>
   <li>GitHub comme service de gestion de versions (https://github.com/tesdy/POOstsBlog.git).<br> 
