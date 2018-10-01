@@ -285,115 +285,6 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +
 +}
 \ No newline at end of file
-Index: app/App.php
-IDEA additional info:
-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
-<+>UTF-8
-===================================================================
---- app/App.php	(date 1538299486000)
-+++ app/App.php	(date 1538299486000)
-@@ -6,45 +6,79 @@
-  * Time: 12:10
-  */
- 
--namespace App;
- 
-+use Core\Config;
-+use Core\Database\MysqlDatabase;
- 
-+/**
-+ * Class App with design Pattern : Factory + Dependency injection + Singleton
-+ * @package App
-+ */
- class App
- {
- 
--    const DB_HOST = 'localhost';
--    const DB_NAME = 'blog';
--    const DB_USER = 'tesdy';
--    const DB_PASS = 'Root1234.';
--    const DB_CHARSET = 'UTF8';
-+    public $title = 'BD_Blog';
-+    private $db_instance;
-+    private static $_instance;
- 
--    private static $database;
--    private static $title = 'BD_Blog';
-+    /**
-+     * @return App
-+     */
-+    public static function getInstance() {
-+        // Singleton : unique App->_instance
-+        if(is_null(self::$_instance)) {
-+            self::$_instance = new App();
-+        }
-+        return self::$_instance;
-+    }
- 
-     /**
--     * @return Database
-+     * @param string $name
-+     * @return mixed
-      */
--    public static function getDb() {
-+    public function getTable($name) {
-+        $class_name = 'App\\Table\\' . ucfirst($name) . 'Table';
-+        // Dependency injection of Database for xxxTable
-+        return new $class_name($this->getDb());
-+    }
- 
--        if(is_null(self::$database)) {
--            self::$database = new Database(self::DB_NAME,self::DB_USER,self::DB_PASS,self::DB_HOST, self::DB_CHARSET);
-+    /**
-+     * @return MysqlDatabase
-+     */
-+    public function getDb()
-+    {
-+        $config = Config::getInstance(ROOT . '/config/config.php');
-+        // Singleton : unique App->db_Instance
-+        if (is_null($this->db_instance)) {
-+            $this->db_instance = new MysqlDatabase($config->get('db_name'), $config->get('db_host'), $config->get('db_user'), $config->get('db_pass'), $config->get('db_charset'));
-         }
--        return self::$database;
-+        return $this->db_instance;
-+    }
-+
-+
-+    public static function load() {
-+        session_start();
-+        require ROOT . '/app/Autoloader.php';
-+        App\Autoloader::Register();
-+        require ROOT . '/core/Autoloader.php';
-+        Core\Autoloader::Register();
-+
-+
-     }
- 
-     public static function notFound() {
--        header("HTTP/1.0 404 NOT FOUND");
--        header("Location: index.php?p=404");
-+        header("HTTP/1.0 404 Not Found", true, 404);
-+        header('Location: index.php?p=error');
-     }
- 
--
-+    public function forbidden()
-+    {
-+        header('HTTP/1.0 403 Forbidden');
-+        die('Accès interdit');
- 
--    public static function getTitle() {
--        return self::$title;
-     }
- 
--    public static function setTitle($title) {
--        self::$title = $title;
--    }
-+
-+
- 
- }
-\ No newline at end of file
 Index: core/Auth/DBAuth.php
 IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
@@ -992,25 +883,6 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +
 +}
 \ No newline at end of file
-Index: config/config.php
-IDEA additional info:
-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
-<+>UTF-8
-===================================================================
---- config/config.php	(date 1538299486000)
-+++ config/config.php	(date 1538299486000)
-@@ -0,0 +1,10 @@
-+<?php
-+
-+
-+return array(
-+    'db_user' => 'tesdy',
-+    'db_pass' => 'Root1234.',
-+    'db_host' => 'localhost',
-+    'db_name' => 'blog',
-+    'db_charset' => 'UTF8'
-+);
-\ No newline at end of file
 Index: public/images/icons8-reading-80.png
 IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
@@ -1021,16 +893,16 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 @@ -0,0 +1,12 @@
 +�PNG
 +
-+   
-+IHDR   P   P   ��   sRGB ���   gAMA  ���a   	pHYs  �  ��o�d  �IDATx^�g�55���{{���E�#VPQE�*(Q,����l�X@EA�a��b<��w`�����N���o^x�����9��3I&��^�z��իt-��M�|
-+��><��Ы���J������a���,\����g�N�,K�p����`�'u(XV��p+ls�5�I�o�-`���p#�<[��Z ������ak�V�7@��㡍� ~���ͪ�)m���A*-��e�X��0�!a�k��W[rɖ�4X�?��P��I߂=�An-�V˼��ʘ��Ƚ`�O-�����u�8kG|]O�&�қ`����2���R�����,��KqrH�	��!�6�B�H�?�[S��矪Rj~8�@��F���MY6���bx�ϊ���v�=g��P��s�Т�pMG�R�Zl1����M?�-��]�.˗���<�#�c-��l%����[�C���Vʻ`˺v�E�I��g�ɮ�q״c��e�Yg�_![�}fE�v}�6=�u4X���Й]��xK|	<礂7uGFՑ`�@����x�ԙ����u`�CX��d\4_[�Sb�C�������ոqx�q����n^�(�ħ��s���2o9wΧ�\�˛��\	qC�r(*��9��B��t�q�>�r�CQ�!�4�
-+!ri����x� ����`9�񋗝Y��NG�r��h�*5�&��y[�eYf':�1/�q��$TL�9L�}7�,��i�*\��t��*լT-0dY�yW�*\ǀ�8"q�+�,#F?�]����u(ȥz���Nh_p�ߩ-�s0��Ӽ-ò����m�I:���ͼߪR���ܹJ��y���U���t�*�V�y{�K:���z̻��/�l�+�t4�Ҵ-�<�>{�bl�J�T2/����w�\n�s]g�S�25�2�"�r�˧�aZ��*��88%3�&��b_nOpU��:<�\�w�2�Ji��s}F\w���R�1�<g\�
++
++IHDRPP��sRGB���gAMA���a	pHYs���o�d�IDATx^�g�55���{{���E�#VPQE�*(Q,����l�X@EA�a��b<��w`�����N���o^x�����9��3I&��^�z��իt-��M�|
++��><��Ы���J������a���,\����g�N�,K�p����`�'u(XV��p+ls�5�I�o�-`���p#�<[��Z������ak�V�7@��㡍� ~���ͪ�)m���A*-��e�X��0�!a�k��W[rɖ�4X�?��P��I߂=�An-�V˼��ʘ��Ƚ`�O-�����u�8kG|]O�&�қ`����2���R�����,��KqrH�	��!�6�B�H�?�[S��矪Rj~8�@��F���MY6���bx�ϊ���v�=g��P��s�Т�pMG�R�Zl1����M?�-��]�.˗���<�#�c-��l%����[�C���Vʻ`˺v�E�I��g�ɮ�q״c��e�Yg�_![�}fE�v}�6=�u4X���Й]��xK|	<礂7uGFՑ`�@����x�ԙ����u`�CX��d\4_[�Sb�C�������ոqx�q����n^�(�ħ��s���2o9wΧ�\�˛��\	qC�r(*��9��B��t�q�>�r�CQ�!�4�
++!ri����x�����`9�񋗝Y��NG�r��h�*5�&��y[�eYf':�1/�q��$TL�9L�}7�,��i�*\��t��*լT-0dY�yW�*\ǀ�8"q�+�,#F?�]����u(ȥz���Nh_p�ߩ-�s0��Ӽ-ò����m�I:���ͼߪR���ܹJ��y���U���t�*�V�y{�K:���z̻��/�l�+�t4�Ҵ-�<�>{�bl�J�T2/����w�\n�s]g�S�25�2�"�r�˧�aZ��*��88%3�&��b_nOpU��:<�\�w�2�Ji��s}F\w���R�1�<g\�
 +Y΁���w�ޑ�a�ݛ��
 +t��㇍v}u�],i��Q��
 +�N��R���>�TR_�-��
 +�c`K�1� ��R���JOe�L������? e�Dԇ��G�[b�s��4h�>M��t�{<�v냾x|d���N�
 +C�\��'Zh:b�6jkح��c���
-+�lrߚ��(�qE�U0�=�9c�6�͢�R����z���U*�bWd}٘����G V_M[<An��6m�Vm��WtA��]Q�M ��p^w�lS�՞la�0�ZkX����S]��3j��i�D�_kE�]IS}cF��Mڦ�M��9��&_Kg.�m�s������6i�66ɷ}x=k�y,��|�Z�ՋǳM���o�4�i����剚��e:��hk]�)�}|�z"���C�r�S�.A�LOA�1�j�v}����e���%��bа/��h$��_�q���k���~av��b��'����Ho��kc�=�K�Y��A_z��իW�^il�?�ƒbߒG    IEND�B`�
++�lrߚ��(�qE�U0�=�9c�6�͢�R����z���U*�bWd}٘����G V_M[<An��6m�Vm��WtA��]Q�M ��p^w�lS�՞la�0�ZkX����S]��3j��i�D�_kE�]IS}cF��Mڦ�M��9��&_Kg.�m�s������6i�66ɷ}x=k�y,��|�Z�ՋǳM���o�4�i����剚��e:��hk]�)�}|�z"���C�r�S�.A�LOA�1�j�v}����e���%��bа/��h$��_�q���k���~av��b��'����Ho��kc�=�K�Y��A_z��իW�^il�?�ƒbߒGIEND�B`�
 \ No newline at end of file
 Index: public/admin.php
 IDEA additional info:
