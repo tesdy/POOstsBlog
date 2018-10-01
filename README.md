@@ -11,9 +11,8 @@ Elle met en place un <strong><em>système de post d'articles</em></strong> ayant
 reprise du thème proposé au cours de la formation dont je n'avais pu fournir un travail convaincant).<br>
 
 Elle est construite sur une architecture se voulant <strong>MVC</strong> Modèle-Vue-Contrôleur avec la mise en place d'un cadre de travail réutilisable.<br>
-<strong>Le Modèle</strong> (spécifique) : [dossiers app/Entity & app/Table] => appartient à l'application.
-
-Le Modèle est scindé en 2 parties : 
+<strong>Le Modèle</strong> (spécifique).
+Il scindé en 2 parties : 
 - <em>app/Entity</em> : gère nos Objets.
 - <em>app/Table</em> : gère le CRUD.
 
@@ -27,7 +26,7 @@ Le Modèle est scindé en 2 parties :
 <em>On trouve donc une partie 'core' réutilisable pour tout type de projet et le reste de l'application qui est "particulier" 
 à ce projet.</em>
 
-<u>Intégration coté client :</u>
+Intégration coté client :
 Langages : HTML, Css et Javascript
 Le site se voulant Responsive design : 
 Solution trouvée avec le Framework Bootstrap de Twitter (dernière version : 4.1) 
