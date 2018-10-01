@@ -10,19 +10,19 @@ Ce projet reprend mes acquis de :<br>
 Le projet a pour but de mettre en place un <strong><em>système de post d'articles</em></strong> ayant pour thème la Bande dessinée et ses dérivés (cette idée est reprise du thème proposé au cours de la formation dont je n'avais pu fournir un travail convaincant).<br>
 
 <h2>Architecture du projet</h2>
+
 Il est construit avec le pattern <strong>MVC</strong> Modèle-Vue-Contrôleur avec la mise en place d'un cadre de travail réutilisable.<br>
 
-
-<strong>Le Modèle</strong> (spécifique).
+<h3>Le Modèle</h3> (spécifique).
 Il scindé en 2 parties : 
 - <em>app/Entity</em> : gère nos Objets.
 - <em>app/Table</em> : gère le CRUD.
 
-<strong>La Vue</strong> (spécifique):<br>
+<h3>La Vue</h3>
 - <em>app/Views</em> => appartient à l'application.
 
-<strong>Les Controlleurs</strong> (Global & Spécifique) : 
-- <em>Le controlleur général</em> (du 'framework') : dossier core/Controller
+<h3>Les Controlleurs</h3> 
+- <em>Le controlleur général</em> du 'framework' : dossier core/Controller
 - <em>Le controlleur spécifique</em> de l'application : dossier app/Controller
 
 <em>On trouve donc une partie 'core' réutilisable pour tout type de projet et le reste de l'application qui est "particulier" 
