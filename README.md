@@ -10,9 +10,9 @@ Mon expérience de 2 ans sur le poste de développeur TMA (renommé Professionna
 Elle met en place un systéme de post d'articles ayant pour thème la Bande dessinée et ses dérivés (cette idée est
 reprise du thème proposé au cours de la formation dont je n'avais pu fournir un travail convaincant).<br>
 
-<p>Elle est construite sur une architecture se voulant MVC Modèle-Vue-Contrôleur avec la mise en place d'un cadre de travail 
+Elle est construite sur une architecture se voulant MVC Modèle-Vue-Contrôleur avec la mise en place d'un cadre de travail 
 réutilisable.<br>
-Modèle (spécifique) : [dossiers app/Entity & app/Table] => appartient à l'application.<br>
+Modèle (spécifique) : [dossiers app/Entity & app/Table] => appartient à l'application.
 Le Modèle est scindé en 2 parties : 
 - app/Entity : gère nos Objets.
 - app/Table : gère le CRUD.
