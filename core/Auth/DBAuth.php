@@ -20,6 +20,7 @@ class DBAuth
      */
     public function __construct(Database $db)
     {
+
         $this->db = $db;
     }
 
@@ -39,7 +40,7 @@ class DBAuth
     public function login($username, $password)
     {
 
-        $user = $this->db->prepare('SELECT * FROM users WHERE username = ?', [$username], __CLASS__ , true);
+        $user = $this->db->prepare('SELECT * FROM users WHERE username = ?', [$username], null , true);
         if($user) {
             if($user->password === sha1($password)) {
                 $_SESSION['auth'] = $user->id;

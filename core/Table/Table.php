@@ -28,9 +28,9 @@ class Table
     {
         $this->db = $db;
         if(is_null($this->table)) {
-        $parts = explode('\\', get_class($this));
-        $class_name = end($parts);
-        $this->table = strtolower(str_replace('Table', '', $class_name)) . 's';
+            $parts = explode('\\', get_class($this));
+            $class_name = end($parts);
+            $this->table = strtolower(str_replace('Table', '', $class_name)) . 's';
         }
     }
 
@@ -41,6 +41,12 @@ class Table
         return $this->query("SELECT * FROM " . $this->table);
     }
 
+    /**
+     * @param $statement
+     * @param null $attributs
+     * @param bool $one
+     * @return mixed
+     */
     public function query($statement, $attributs = null, $one = false) {
         if($attributs) {
             return $this->db->prepare(
@@ -59,10 +65,33 @@ class Table
 
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * @return array
+     */
+    public function extractArray($key, $value) {
+        $records = $this->all();
+        $return = array();
+        foreach ($records as $record) {
+            $return[$record->$key] = $record->$value;
+        }
+        return $return;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function find($id) {
         return $this->query("SELECT * FROM {$this->table} WHERE id = ?;", array($id), true);
     }
 
+    /**
+     * @param $id
+     * @param $fields
+     * @return mixed
+     */
     public function update($id, $fields) {
         $sql_parts = [];
         $attributes = [];
@@ -73,6 +102,35 @@ class Table
         $attributes[] = $id;
         $sql_part = implode(', ', $sql_parts);
         return $this->query("UPDATE {$this->table} SET $sql_part WHERE id = ?;", $attributes, true);
+    }
+
+    /**
+     * @param $fields
+     * @return mixed|string
+     */
+    public function create($fields) {
+        $sql_parts = [];
+        $attributes = [];
+        foreach ($fields as $field => $value) {
+            $sql_parts[] = "$field = ?";
+            $attributes[] = $value;
+        }
+        $sql_part = implode(', ', $sql_parts);
+        // TODO : Gerer le cas d'un titre qui existe déjà !
+        try {
+            return $this->query("INSERT INTO {$this->table} SET $sql_part;", $attributes, true);
+        } catch(\PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @param $id
+     * @param $fields
+     * @return mixed
+     */
+    public function delete($id) {
+        return $this->query("DELETE FROM {$this->table} WHERE id = ?", [$id], true);
     }
 
 }

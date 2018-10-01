@@ -26,7 +26,7 @@ class ArticleTable extends Table
         return $this->query("
         SELECT a.id, a.titre, a.contenu, a.date, a.added_date, c.nom as cat_nom
         FROM article a
-        LEFT JOIN category c on a.categorie_id = c.id
+        LEFT JOIN category c on a.category_id = c.id
         ORDER BY a.added_date DESC 
         LIMIT 3;
         ");
@@ -41,7 +41,21 @@ class ArticleTable extends Table
         return $this->query("
         SELECT a.id, a.titre, a.contenu, a.date, a.added_date, c.nom as cat_nom
         FROM article a
-        LEFT JOIN category c on a.categorie_id = c.id
+        LEFT JOIN category c on a.category_id = c.id
+        WHERE a.id = ?
+        ", [$id], true);
+
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function findWithCategory($id) {
+        return $this->query("
+        SELECT a.id, a.titre, a.contenu, a.date, a.added_date, a.category_id, c.nom as cat_nom
+        FROM article a
+        LEFT JOIN category c on a.category_id = c.id
         WHERE a.id = ?
         ", [$id], true);
 
@@ -55,8 +69,8 @@ class ArticleTable extends Table
         return $this->query("
         SELECT a.id, a.titre, a.contenu, a.date, a.added_date, c.nom as cat_nom
         FROM article a
-        LEFT JOIN category c on a.categorie_id = c.id
-        WHERE a.categorie_id = ?
+        LEFT JOIN category c on a.category_id = c.id
+        WHERE a.category_id = ?
         ORDER BY a.added_date DESC 
         LIMIT 3;
         ", [$cat_id], false);

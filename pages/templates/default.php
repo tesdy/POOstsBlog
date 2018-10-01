@@ -30,6 +30,11 @@
             </span>
                 <strong>BD_Blog</strong>
             </a>
+            <?php
+            // TODO Réfléchir à la solution connexion / déconnexion!
+            echo $status = (isset($_SESSION['auth'])) ? "<a href='index.php?p=unsign'>Déconnexion</a>" : "<a href='index.php?p=login'>Connexion</a>";
+            echo $adminPage = (isset($_SESSION['auth'])) ? "<a href='admin.php'>Administration</a>" : "";
+            ?>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -44,7 +49,7 @@
 
 <div class="container">
     <div class="starter-template" style="padding-top: 50px">
-<?= $content; ?>
+        <?= $content; ?>
     </div>
 
 </div>

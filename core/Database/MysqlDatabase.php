@@ -74,7 +74,7 @@ class MysqlDatabase extends Database
         ) {
             return $req;
         }
-        if(is_null($class_name)) {
+        if($class_name === null) {
             $req->setFetchMode(PDO::FETCH_OBJ);
 
         } else {
@@ -122,6 +122,9 @@ class MysqlDatabase extends Database
         return $datas;
     }
 
+    public function lastInsertId() {
 
+        return $this->getPDO()->lastInsertId();
+    }
 
 }
