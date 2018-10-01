@@ -16,13 +16,14 @@ Modèle (spécifique) : [dossiers app/Entity & app/Table] => appartient à l'app
 Le Modèle est scindé en 2 parties : 
 - app/Entity : gère nos Objets.
 - app/Table : gère le CRUD.
-Vue (spécifique): dossier app/Views => appartient à l'application.
+
+La Vue (spécifique): dossier app/Views => appartient à l'application.
+
 Les Controlleurs (Global & Spécifique) : 
 - Le controlleur général (du 'framework') : dossier core/Controller
 - Le controlleur spécifique de l'application : dossier app/Controller
 On trouve donc une partie 'core' réutilisable pour tout type de projet et le reste de l'application qui est "particulier" 
 à ce projet.
-<p>
 
 Intégration coté client : 
 Langages : HTML, Css et Javascript
