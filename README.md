@@ -22,11 +22,12 @@ Il scindé en 2 parties :
 </ul>
 <h3>La Vue</h3>
 <ul>
-  <li><em>app/Views</em> => Spécifique à ce projet, les pages de la vue contiennent les éléments visuels, ainsi que la logique nécessaire afin d'afficher les données provenant du modèle.</li>
+  <li><em>app/Views</em> => Spécifique à chaque application, les pages de la vue contiennent les éléments visuels, ainsi que la logique nécessaire afin d'afficher les données provenant du modèle.</li>
+  On trouvera malgré dans le core des méthodes de construction de formulaires, réutilisables pour de futurs applications. (fichiers Form.php & BootstrapForm.php dans core/HTML/) 
 </ul>
 
-<h3>Les Controlleurs</h3> 
-<p>Ils gèrent la dynamique de l’application. Cela fait le lien entre l’utilisateur et le reste de l’application.<br>
+<h3>Le Controlleur</h3> 
+<p>Il gère la dynamique de l’application. Il fait le lien entre l’utilisateur et le reste de l’application.<br>
 <em>Le chef d'orchestre</em></p>
 Dans ce projet on trouvera 2 controlleurs : 
 <ul>
