@@ -10,22 +10,24 @@ Ce projet reprend mes acquis de :<br>
 Elle met en place un <strong><em>système de post d'articles</em></strong> ayant pour thème la Bande dessinée et ses dérivés (cette idée est
 reprise du thème proposé au cours de la formation dont je n'avais pu fournir un travail convaincant).<br>
 
-Elle est construite sur une architecture se voulant MVC Modèle-Vue-Contrôleur avec la mise en place d'un cadre de travail 
-réutilisable.<br>
-<strong> Le Modèle</strong> (spécifique) : [dossiers app/Entity & app/Table] => appartient à l'application.
+Elle est construite sur une architecture se voulant <strong>MVC</strong> Modèle-Vue-Contrôleur avec la mise en place d'un cadre de travail réutilisable.<br>
+<strong>Le Modèle</strong> (spécifique) : [dossiers app/Entity & app/Table] => appartient à l'application.
+
 Le Modèle est scindé en 2 parties : 
 - <em>app/Entity</em> : gère nos Objets.
 - <em>app/Table</em> : gère le CRUD.
 
-<strong>La Vue</strong> (spécifique): dossier app/Views => appartient à l'application.
+<strong>La Vue</strong> (spécifique): <br>
+- <em>app/Views</em> => appartient à l'application.
 
 <strong>Les Controlleurs</strong> (Global & Spécifique) : 
 - <em>Le controlleur général</em> (du 'framework') : dossier core/Controller
 - <em>Le controlleur spécifique</em> de l'application : dossier app/Controller
-On trouve donc une partie 'core' réutilisable pour tout type de projet et le reste de l'application qui est "particulier" 
-à ce projet.
 
-Intégration coté client : 
+<em>On trouve donc une partie 'core' réutilisable pour tout type de projet et le reste de l'application qui est "particulier" 
+à ce projet.</em>
+
+<u>Intégration coté client :</u>
 Langages : HTML, Css et Javascript
 Le site se voulant Responsive design : 
 Solution trouvée avec le Framework Bootstrap de Twitter (dernière version : 4.1) 
