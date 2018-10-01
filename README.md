@@ -15,16 +15,18 @@ Il est construit avec le pattern <strong>MVC</strong> (Modèle-Vue-Contrôleur) 
 
 <h3>Le Modèle</h3>
 Il scindé en 2 parties : 
-- <em>app/Entity</em> : gère nos Objets.
-- <em>app/Table</em> : gère le CRUD.
-
+<ul>
+<li><em>app/Entity</em> : gère nos Objets.
+<li><em>app/Table</em> : gère le CRUD.
+</ul>
 <h3>La Vue</h3>
 - <em>app/Views</em> => appartient à l'application.
 
 <h3>Les Controlleurs</h3> 
-- <em>Le controlleur général</em> du 'framework' : dossier core/Controller
-- <em>Le controlleur spécifique</em> de l'application : dossier app/Controller
-
+<ul>
+<li><em>Le controlleur général</em> du 'framework' : dossier core/Controller
+<li><em>Le controlleur spécifique</em> de l'application : dossier app/Controller
+</ul>
 <em>On trouve donc une partie 'core' réutilisable pour tout type de projet et le reste de l'application qui est "particulier" 
 à ce projet.</em>
 
@@ -33,9 +35,11 @@ Intégration coté client :<br>
 Le site se voulant Responsive design : 
 Solution trouvée avec le <strong>Framework Bootstrap de Twitter</strong> (dernière version : 4.1) 
 Ce choix permet l'implémentation de : 
-- Dropdowns 
-- Caroussel 
-- Parallax 
+<ul>
+<li>Dropdowns 
+<li>Caroussel 
+<li>Parallax 
+  </ul>
 avec Jquery 
 
 Développement : 
