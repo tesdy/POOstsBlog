@@ -11,7 +11,7 @@ Le projet a pour but de mettre en place un <strong><em>système de post d'articl
 
 <h2>Architecture du projet</h2>
 
-Il est construit avec le pattern <strong>MVC</strong> Modèle-Vue-Contrôleur avec la mise en place d'un cadre de travail réutilisable.<br>
+Il est construit avec le pattern <strong>MVC</strong> (Modèle-Vue-Contrôleur) avec la mise en place d'un cadre de travail réutilisable.<br>
 
 <h3>Le Modèle</h3>
 Il scindé en 2 parties : 
