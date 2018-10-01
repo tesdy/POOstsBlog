@@ -2,25 +2,27 @@
 
 Application réalisée dans le cadre de ma certification pour l'obtention du titre de développeur logiciels avec l'AFPA. 
 
-Ce projet reprend mes acquis de : 
-Ma formation réalisé en 2015 avec l'AFPA de Caen Ifs
-Mon apprentissage en Autodidacte depuis cette formation 
+Ce projet reprend mes acquis de :<br> 
+Ma formation réalisé en 2015 avec l'AFPA de Caen Ifs.<br>
+Mon apprentissage en Autodidacte depuis cette formation.<br>
 Mon expérience de 2 ans sur le poste de développeur TMA (renommé Professionnal Service) avec la société Determine. 
 
 Elle met en place un systéme de post d'articles ayant pour thème la Bande dessinée et ses dérivés (cette idée est
-reprise du thème proposé au cours de la formation dont je n'avais pu fournir un travail convaincant).
+reprise du thème proposé au cours de la formation dont je n'avais pu fournir un travail convaincant).<br>
 
-Elle est construite sur une architecture se voulant MVC Modèle-Vue-Contrôleur avec la mise en place d'un cadre de travail 
-réutilisable.
-Modèle (spécifique) : [dossiers app/Entity & app/Table] => appartient à l'application
--> app/Entity : gère nos Objets 
--> app/Table : gère le CRUD
-Vue (spécifique): dossier app/Views => appartient à l'application
+<p>Elle est construite sur une architecture se voulant MVC Modèle-Vue-Contrôleur avec la mise en place d'un cadre de travail 
+réutilisable.<br>
+Modèle (spécifique) : [dossiers app/Entity & app/Table] => appartient à l'application.<br>
+Le Modèle est scindé en 2 parties : 
+-> app/Entity : gère nos Objets.<br>
+-> app/Table : gère le CRUD.<br>
+Vue (spécifique): dossier app/Views => appartient à l'application.
 Les Controlleurs (Global & Spécifique) : 
-- Le controlleur général (du 'framework') : dossier core/Controller
-- Le controlleur spécifique de l'application : dossier app/Controller
+-> Le controlleur général (du 'framework') : dossier core/Controller
+-> Le controlleur spécifique de l'application : dossier app/Controller
 On trouve donc une partie 'core' réutilisable pour tout type de projet et le reste de l'application qui est "particulier" 
-à ce projet. 
+à ce projet.
+<p>
 
 Intégration coté client : 
 Langages : HTML, Css et Javascript
