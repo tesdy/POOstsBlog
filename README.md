@@ -1,16 +1,18 @@
 # POOstsBlog
 
-Application réalisée dans le cadre de ma certification pour l'obtention du titre de développeur logiciels avec l'AFPA. 
+<em>Application réalisée dans le cadre de ma certification pour l'obtention du titre de développeur logiciels avec l'AFPA.</em> 
 
 Ce projet reprend mes acquis de :<br> 
 - Ma formation réalisé en 2015 avec l'AFPA de Caen Ifs.<br>
 - Mon apprentissage en Autodidacte depuis cette formation.<br>
 - Mon expérience de 2 ans sur le poste de développeur TMA (renommé Professionnal Service) avec la société Determine. 
 <hr>
-Elle met en place un <strong><em>système de post d'articles</em></strong> ayant pour thème la Bande dessinée et ses dérivés (cette idée est
-reprise du thème proposé au cours de la formation dont je n'avais pu fournir un travail convaincant).<br>
+Le projet a pour but de mettre en place un <strong><em>système de post d'articles</em></strong> ayant pour thème la Bande dessinée et ses dérivés (cette idée est reprise du thème proposé au cours de la formation dont je n'avais pu fournir un travail convaincant).<br>
 
-Elle est construite sur une architecture se voulant <strong>MVC</strong> Modèle-Vue-Contrôleur avec la mise en place d'un cadre de travail réutilisable.<br>
+<h2>Architecture du projet</h2>
+Il est construit avec le pattern <strong>MVC</strong> Modèle-Vue-Contrôleur avec la mise en place d'un cadre de travail réutilisable.<br>
+
+
 <strong>Le Modèle</strong> (spécifique).
 Il scindé en 2 parties : 
 - <em>app/Entity</em> : gère nos Objets.
