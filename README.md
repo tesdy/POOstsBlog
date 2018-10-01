@@ -7,7 +7,7 @@ Ce projet reprend mes acquis de :<br>
 - Mon apprentissage en Autodidacte depuis cette formation.<br>
 - Mon expérience de 2 ans sur le poste de développeur TMA (renommé Professionnal Service) avec la société Determine. 
 <hr>
-Elle met en place un **_système de post d'articles_** ayant pour thème la Bande dessinée et ses dérivés (cette idée est
+Elle met en place un <strong><em>système de post d'articles</em></strong> ayant pour thème la Bande dessinée et ses dérivés (cette idée est
 reprise du thème proposé au cours de la formation dont je n'avais pu fournir un travail convaincant).<br>
 
 Elle est construite sur une architecture se voulant MVC Modèle-Vue-Contrôleur avec la mise en place d'un cadre de travail 
