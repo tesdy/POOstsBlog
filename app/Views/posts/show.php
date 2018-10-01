@@ -2,12 +2,6 @@
 
 $app = App::getInstance();
 
-$article = $app->getTable('Article')->find($_GET['id']);
-
-if($article === false) {
-    $app->notFound();
-}
-
 $app->title = $article->titre;
 ?>
 

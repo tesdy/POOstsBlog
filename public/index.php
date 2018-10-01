@@ -19,24 +19,25 @@ if(isset($_GET['p'])) {
     $page = 'home';
 }
 
-ob_start();
 if($page === 'home') {
-    require ROOT . '/pages/posts/home.php';
+    $controller = new \App\Controller\PostsController();
+    $controller->index();
 } elseif ($page === 'posts.category'){
-    require ROOT . '/pages/posts/category.php';
+    $controller = new \App\Controller\PostsController();
+    $controller->category();
 } elseif ($page === 'posts.show'){
-    require ROOT . '/pages/posts/show.php';
+    $controller = new \App\Controller\PostsController();
+    $controller->show();
 } elseif ($page === 'login'){
-    require ROOT . '/pages/users/login.php';
-} elseif ($page === 'unsign'){
-    require ROOT . '/pages/users/unsign.php';
+    $controller = new \App\Controller\UsersController();
+    $controller->login();
+} elseif ($page === 'admin.posts.index') {
+    $controller = new \App\Controller\Admin\ArticlesController();
+    $controller->index();
+}elseif ($page === 'unsign'){
+    $controller = new \App\Controller\UsersController();
+    $controller->logout();
 } else {
-    require ROOT . '/pages/error.php';
+    $controller = new \App\Controller\Admin\ArticlesController();
+    $controller->error();
 }
-
-
-$content = ob_get_clean();
-require ROOT . '/pages/templates/default.php';
-
-
-

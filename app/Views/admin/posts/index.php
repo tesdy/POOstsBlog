@@ -1,14 +1,3 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: ubuguy
- * Date: 29/09/18
- * Time: 13:41
- */
-
-$articles = App::getInstance()->getTable('article')->all();
-?>
-
 <h1>Gestion des articles</h1>
 
 <p>

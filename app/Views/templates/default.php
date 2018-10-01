@@ -33,7 +33,7 @@
             <?php
             // TODO Réfléchir à la solution connexion / déconnexion!
             echo $status = (isset($_SESSION['auth'])) ? "<a href='index.php?p=unsign'>Déconnexion</a>" : "<a href='index.php?p=login'>Connexion</a>";
-            echo $adminPage = (isset($_SESSION['auth'])) ? "<a href='admin.php'>Administration</a>" : "";
+            echo $adminPage = (isset($_SESSION['auth'])) ? "<a href='index.php?p=admin.posts.index'>Administration</a>" : "";
             ?>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">

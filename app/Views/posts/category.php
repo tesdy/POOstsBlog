@@ -1,18 +1,8 @@
 <?php
-
-$app = App::getInstance();
-
-$categorie = $app->getTable('Category')->find($_GET['id']);
-
-if($categorie === false) {
-    $app->notFound();
-}
-
-$articles = $app->getTable('Article')->lastByCategory($_GET['id']);
-$categories = $app->getTable('Category')->all();
+$articleCount = count($articles) > 1 ? count($articles) . " résultats": count($articles) . " résultat";
 ?>
 
-<h1><?= $categorie->nom ?></h1>
+<h1><?php echo $category->nom . "<span style='font-size: small'>(" . $articleCount; ?>)</span></h1>
 
 <div class="row">
     <div class="col-sm-8">
