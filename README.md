@@ -14,6 +14,7 @@ Le projet a pour but de mettre en place un <strong><em>système de post d'articl
 Il est construit avec le pattern <strong>MVC</strong> (Modèle-Vue-Contrôleur) avec la construction d'un cadre de travail réutilisable.<br>
 
 <h3>Le Modèle</h3>
+<p>Il contient les données ainsi que de la logique en rapport avec les données.</p>
 Il scindé en 2 parties : 
 <ul>
   <li><em>app/Entity</em> : gère nos Objets.
@@ -21,10 +22,13 @@ Il scindé en 2 parties :
 </ul>
 <h3>La Vue</h3>
 <ul>
-  <li><em>app/Views</em> => Spécifique à ce projet.</li>
+  <li><em>app/Views</em> => Spécifique à ce projet, les pages de la vue contiennent les éléments visuels, ainsi que la logique nécessaire afin d'afficher les données provenant du modèle.</li>
 </ul>
 
 <h3>Les Controlleurs</h3> 
+<p>Ils gèrent la dynamique de l’application. Cela fait le lien entre l’utilisateur et le reste de l’application.<br>
+<em>Le chef d'orchestre</em></p>
+Dans ce projet on trouvera 2 controlleurs : 
 <ul>
   <li><em>Le controlleur général</em> du 'framework' : dossier core/Controller
   <li><em>Le controlleur spécifique</em> de l'application : dossier app/Controller
