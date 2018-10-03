@@ -3,3 +3,4 @@ config/*
 congig
 .idea
 .idea/
+.idea/*
