@@ -51,6 +51,7 @@ class MysqlDatabase extends Database
         if(is_null($this->pdo)) {;
             $pdo = new PDO("mysql:dbname=$this->db_name;host=$this->db_host;", $this->db_user, $this->db_pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES '" . $this->db_charset . "'"));
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);;
             $this->pdo = $pdo;
         }
         return $this->pdo;

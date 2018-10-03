@@ -12,7 +12,7 @@ $categories = App::getInstance()->getTable('category')->all();
 <h1>Gestion des Catégories</h1>
 
 <p>
-    <a href="?p=categories.add" class="btn btn-success">Ajouter une nouvelle catégorie</a>
+    <a href="?p=admin.categories.add" class="btn btn-success">Ajouter une nouvelle catégorie</a>
 </p>
 
 <table class="table">
@@ -30,15 +30,15 @@ $categories = App::getInstance()->getTable('category')->all();
 
         <tr>
             <td><?= $categorie->id ?></td>
-            <td><a href="index.php?p=categories.show&id=<?= $categorie->id ?>"><?= $categorie->nom ?></a></td>
+            <td><a href="index.php?p=admin.categories.show&id=<?= $categorie->id ?>"><?= $categorie->nom ?></a></td>
             <td>
-                <a href="?p=categories.edit&id=<?= $categorie->id ?>" class="btn btn-primary">Editer</a>
+                <a href="index.php?p=admin.categories.edit&id=<?= $categorie->id ?>" class="btn btn-primary">Editer</a>
 
                 <!-- TODO Pour la suppression d'un article : voir les Token CRSF : Cross-Site Request Forgery
                 Solution temporaire via un formulaire : -->
-                <form action="?p=categories.delete" method="post" style="display: inline">
+                <form action="?p=admin.categories.delete" method="post" style="display: inline">
                     <input type="hidden" name="id" value="<?= $categorie->id ?>">
-                    <button type="submit" class="btn btn-danger" href="?p=categories.delete&id=<?= $categorie->id ?>">Supprimer</button>
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
                 </form>
             </td>
         </tr>

@@ -24,7 +24,7 @@ $articleCount = count($articles) > 1 ? count($articles) . " résultats": count($
         <ul>
             <?php
             foreach ($categories as $categorie): ?>
-                <li><a href="index.php?p=posts.category&id=<?= $categorie->id ?>"><?= $categorie->nom ?></a></li>
+                <li><a href="index.php?p=articles.category&id=<?= $categorie->id ?>"><?= $categorie->nom ?></a></li>
             <?php
             endforeach;
             ?>

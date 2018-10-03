@@ -30,7 +30,7 @@ class Controller {
     {
         header('HTTP/1.0 403 Forbidden');
         // TODO ajouter un header + message flash
-        header('Location: index.php?p=error');
+        echo 'accès refusé';
 
     }
 

@@ -13,7 +13,7 @@ class CategoryEntity
 {
 
     public function getUrl() {
-        return 'index.php?p=posts.category&id=' . $this->id;
+        return 'index.php?p=articles.category&id=' . $this->id;
     }
 
 

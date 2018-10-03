@@ -24,21 +24,15 @@ if(isset($_GET['p'])) {
 
 ob_start();
 if($page === 'home') {
-    require ROOT . '/views/admin/posts/index.php';
-} elseif ($page === 'posts.edit'){
-    require ROOT . '/views/admin/posts/edit.php';
-} elseif ($page === 'posts.add'){
-    require ROOT . '/views/admin/posts/add.php';
-} elseif ($page === 'posts.delete'){
-    require ROOT . '/views/admin/posts/delete.php';
+    require ROOT . '/views/admin/articles/index.php';
+} elseif ($page === 'admin.articles.edit' || $page === 'admin.articles.add'){
+    require ROOT . '/views/admin/articles/edit.php';
+} elseif ($page === 'articles.delete'){
+    require ROOT . '/views/admin/index.';
 } elseif($page === 'categories.index') {
     require ROOT . '/views/admin/categories/index.php';
 } elseif ($page === 'categories.edit'){
     require ROOT . '/views/admin/categories/edit.php';
-} elseif ($page === 'categories.add'){
-    require ROOT . '/views/admin/categories/add.php';
-} elseif ($page === 'categories.delete'){
-    require ROOT . '/views/admin/categories/delete.php';
 } else {
     require ROOT . '/views/error.php';
 }

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../public/images/icons8-reading-80.png">
+    <link rel="icon" href="../public/images/icons8-reading-801.png">
 
     <title>
         <?php echo App::getInstance()->title; ?>
@@ -32,8 +32,8 @@
             </a>
             <?php
             // TODO Réfléchir à la solution connexion / déconnexion!
-            echo $status = (isset($_SESSION['auth'])) ? "<a href='index.php?p=unsign'>Déconnexion</a>" : "<a href='index.php?p=login'>Connexion</a>";
-            echo $adminPage = (isset($_SESSION['auth'])) ? "<a href='index.php?p=admin.posts.index'>Administration</a>" : "";
+            echo $status = (isset($_SESSION['auth'])) ? "<a href='index.php?p=users.logout'>Déconnexion</a>" : "<a href='index.php?p=users.login'>Connexion</a>";
+            echo $adminPage = (isset($_SESSION['auth'])) ? "<a href='index.php?p=admin.articles.index'>Administration</a>" : "";
             ?>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">

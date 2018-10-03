@@ -63,17 +63,18 @@ class ArticleTable extends Table
 
     /**
      * @param $cat_id
+     * @param $limit
      * @return mixed
      */
-    public function lastByCategory($cat_id) {
+    public function lastByCategory($cat_id, $limit) {
         return $this->query("
         SELECT a.id, a.titre, a.contenu, a.date, a.added_date, c.nom as cat_nom
         FROM article a
         LEFT JOIN category c on a.category_id = c.id
-        WHERE a.category_id = ?
+        WHERE a.category_id = ? 
         ORDER BY a.added_date DESC 
-        LIMIT 3;
-        ", [$cat_id], false);
+        LIMIT ?;
+        ", [$cat_id, $limit], false);
     }
 
 }
